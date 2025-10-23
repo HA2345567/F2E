@@ -60,7 +60,6 @@ export const useProjectCreation = () => {
     try {
       const thumbnail = generateGradientThumbnail()
 
-      // ✅ Fixed: Wrap sketch-related data inside `sketchesData`
       const result = await fetchMutation(api.projects.createProject, {
         userId: user.id as Id<'users'>,
         name: name || undefined,
