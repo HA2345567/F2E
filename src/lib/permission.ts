@@ -9,4 +9,4 @@ export const isPublicRoutes =[
     "/auth(.*)", "/public(.*)"
 ]
 
-export const isProtectedRoutes = ['dashboard(.*)'];
+export const isProtectedRoutes = ['/dashboard(.*)']; 

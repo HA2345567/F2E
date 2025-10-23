@@ -3,7 +3,6 @@ import { convexAuthNextjsMiddleware, createRouteMatcher, nextjsMiddlewareRedirec
 import { isBypassRoute, isProtectedRoutes, isPublicRoutes } from "./lib/permission";
 
 const ProtectedMathcher = createRouteMatcher(isProtectedRoutes);
-const PublicRouteMathcher = createRouteMatcher(isPublicRoutes);
 const BypassMatcher = createRouteMatcher(isBypassRoute);
 export default convexAuthNextjsMiddleware(async (request , {convexAuth}) =>{
     if (BypassMatcher(request)) {
@@ -12,12 +11,10 @@ export default convexAuthNextjsMiddleware(async (request , {convexAuth}) =>{
     const authed = await convexAuth.isAuthenticated();
     // Only redirect unauthenticated users from protected routes
 
-    if(ProtectedMathcher(request) && authed){
-        return nextjsMiddlewareRedirect(request, `/dashboard`);
-    }
     if (ProtectedMathcher(request) && !authed) {
         return nextjsMiddlewareRedirect(request, `/auth/sign-in`);
     }
+    // Let authenticated users access protected routes normally
     // Public routes do not redirect
     return;
 },{

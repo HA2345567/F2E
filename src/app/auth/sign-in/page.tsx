@@ -1,6 +1,6 @@
 "use client"
-import Github from '@/components/oauth/github'
-import Google from '@/components/oauth/google'
+import Github from '@/components/buttons/oauth/github'
+import Google from '@/components/buttons/oauth/google'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -126,7 +126,7 @@ export default function LoginPage() {
 
                 <div className="bg-muted rounded-(--radius) border p-3">
                     <p className="text-accent-foreground text-center text-sm">
-                        Don't have an account ?
+                        Don&apos;t have an account ?
                         <Button
                             asChild
                             variant="link"

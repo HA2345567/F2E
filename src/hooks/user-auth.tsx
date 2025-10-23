@@ -52,7 +52,9 @@ export const useAuth =() =>{
                 password: data.password,
                 flow: 'signIn',
             })
-            router.push('/dashboard')
+            // Ensure server components/middleware see updated auth state before navigation
+            try { await router.refresh(); } catch {}
+            router.replace('/dashboard')
         }catch(error){
             console.error(error)
             signInForm.setError('password', {message: 'Invalid email or password'})
@@ -71,7 +73,8 @@ export const useAuth =() =>{
                 name: `${data.firstName} ${data.lastName}`,
                 flow: 'signUp',
             })
-            router.push('/dashboard')
+            try { await router.refresh(); } catch {}
+            router.replace('/dashboard')
 
         }catch(error){
             console.error(error)
