@@ -1,5 +1,5 @@
-export default function Home() {
-  return (
-    <div>Hii Harsh </div>
-  );
+
+const Page =()=>{
+  return <div></div>
 }
+export default Page;

@@ -28,20 +28,20 @@ const Navbar = () => {
   const tabs: TabProps[] = [
     {
       label: "Canvas",
-      href: `/dashboard/canvas?project=${projectId}`,
+      href: `/dashboard/${me.name}/canvas?project=${projectId}`,
       icon: <Hash className="w-4 h-4" />,
     },
     {
       label: "Style Guide",
-      href: `/dashboard/style-guide?project=${projectId}`,
+      href: `/dashboard/${me.name}/style-guide?project=${projectId}`,
       icon: <LayoutTemplate className="h-4 w-4" />,
     },
   ]
 
-  // Only run Convex query if projectId is available
+  // Only run Convex query if projectId is available and valid
   const project = useQuery(
     api.projects?.getProject,
-    projectId ? { projectId: projectId as Id<"projects"> } : "skip"
+    projectId && projectId !== "null" ? { projectId: projectId as Id<"projects"> } : "skip"
   )
 
   const hasCanvas = pathname.includes("canvas")
@@ -59,7 +59,7 @@ const Navbar = () => {
         </Link>
 
         {/* Project Name Display */}
-        {!hasCanvas || !hasStyleGuide && ( <div className="lg:inline-block hidden rounded-full text-primary/60 border border-white/[0.12] backdrop-blur-xl bg-white/[0.08] px-4 py-2 text-sm saturate-150">Project/{project?.name}</div> )}
+        {(!hasCanvas || !hasStyleGuide) && ( <div className="lg:inline-block hidden rounded-full text-primary/60 border border-white/[0.12] backdrop-blur-xl bg-white/[0.08] px-4 py-2 text-sm saturate-150">Project/{project?.name}</div> )}
       </div>
 
       {/* Middle Tabs Section */}
@@ -104,7 +104,7 @@ const Navbar = () => {
           <CircleQuestionMark className="size-5 text-white" />
         </Button>
         <Avatar className="size-12 ml-2">
-          <AvatarImage src={me.image || ""} />
+          <AvatarImage src={me.image || undefined} />
           <AvatarFallback>
             <User className="size-5 text-black" />
           </AvatarFallback>
