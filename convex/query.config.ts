@@ -17,7 +17,7 @@ export const ProfileQuery= async() =>{
 export const SubscriptionEntitlementQuery= async()=>{
     const rawProfile = await ProfileQuery()
     const profile = normalizeProfile(
-    rawProfile._valueJSON as unknown as ConvexUserRaw | null
+    rawProfile._valueJSON as unknown as ConvexUserRaw | null 
     )
 
     const entitlement = await preloadQuery(
@@ -29,5 +29,4 @@ export const SubscriptionEntitlementQuery= async()=>{
     return{entitlement , profileName : profile?.name}
 
 }
-
 
