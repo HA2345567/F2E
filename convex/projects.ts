@@ -65,7 +65,15 @@ export const createProject = mutation({
 
 // ===========================
 //  Helper: Get Next Project Number
-// ===========================
+/**
+ * Allocate and return the next sequential project number for a user.
+ *
+ * This function advances the stored per-user project counter so subsequent
+ * calls yield increasing numbers.
+ *
+ * @param userId - ID of the user to allocate the project number for
+ * @returns The project number to assign to the user's new project; returns 1 for the user's first project
+ */
 async function getNextProjectNumber(ctx: any, userId: string): Promise<number> {
   const counter = await ctx.db
     .query("project_counters")
@@ -132,5 +140,4 @@ export const getProjectStyleGuide= query({
         return project.styleGuide ? JSON.parse(project.styleGuide): null 
   }
 })
-
 

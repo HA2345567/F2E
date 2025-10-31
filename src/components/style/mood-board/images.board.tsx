@@ -15,6 +15,13 @@ interface ImageBoardProps {
   marginTop?: string
 }
 
+/**
+ * Renders a transformable mood-board image tile that displays an optional preview, an uploading spinner, and can be removed by clicking.
+ *
+ * @param image - Mood-board image data (expects `id`, optional `preview` URL, and `uploading` flag)
+ * @param removeImage - Callback invoked with the image `id` when the tile is clicked to request removal
+ * @returns The JSX element for the positioned, rotatable image card with optional overlay and click-to-remove behavior
+ */
 export function ImageBoard({
   image,
   removeImage,
