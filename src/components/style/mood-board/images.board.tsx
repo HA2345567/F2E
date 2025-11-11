@@ -2,17 +2,46 @@
 
 import Image from 'next/image'
 import { MoodBoardImages } from '@/hooks/use-style'
-import { cn } from '@/lib/utils'
+import { AlertCircle, CheckCircle, Loader2, X } from 'lucide-react'
+
 
 interface ImageBoardProps {
   image: MoodBoardImages
-  removeImage: (imageId: string) => Promise<void>
+  removeImage: (id:string) => void
   xOffset: number
   yOffset: number
   rotation: number
   zIndex: number
   marginLeft?: string
   marginTop?: string
+}
+
+const UploadStatus = (image:{
+  uploading: boolean
+  uploaded: boolean
+  error?: string
+})=> {
+  if(image.uploading){
+    return(
+      <div className='absolute inset-0 bg-black/50 flex items-center justify-center rounded-2xl '>
+        <Loader2 className='w-6 h-6 text-white animate-spin'/>
+        </div>
+    )
+  }
+  if(image.uploaded){
+    return(
+      <div className='absoute top-2 right-2'>
+        <CheckCircle className='w-5 h-5 text-green-400'/>
+      </div>
+    )
+  }
+  if(image.error){
+    return(
+      <div className='absolute top-2 right-2'>
+        <AlertCircle className='w-5 h-5 text-red-400'/>
+      </div>
+    )
+  }
 }
 
 export function ImageBoard({
@@ -27,31 +56,40 @@ export function ImageBoard({
 }: ImageBoardProps) {
   return (
     <div
-      className="absolute transition-transform duration-300 ease-out"
+    key={`board-${image.id}`}
+      className="absolute group"
       style={{
         transform: `translate(${xOffset}px, ${yOffset}px) rotate(${rotation}deg)`,
-        zIndex,
-        marginLeft,
-        marginTop
+       zIndex: zIndex,
+       left:'50%',
+       top:'50%',
+       marginLeft: marginLeft,
+       marginTop: marginTop,
+      
       }}
     >
       <div 
         className="relative w-40 h-48 rounded-2xl overflow-hidden bg-white shadow-xl border border-border/20 hover:scale-105 transition-all duration-200 cursor-pointer"
-        onClick={() => removeImage(image.id)}
+        
       >
-        {image.preview ? (
-          <Image 
-            src={image.preview}
-            alt="Mood board image"
-            fill
-            className="object-cover"
-          />
-        ) : null}
-        {image.uploading && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
-          </div>
-        )}
+        <Image
+        src={image.preview}
+        alt="Mood board image"
+        fill 
+        className='object-cover'/>
+
+        <UploadStatus
+        uploading={image.uploading}
+        uploaded={image.uploaded}
+        error= {image.error}/>
+
+       <button 
+       onClick={() => removeImage(image.id)}
+       className='absolute top-2 right-2 w-6 h-6 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'>
+        <X className='w-4 h-4 text-white'/>
+
+       </button>
+        
       </div>
     </div>
   )

@@ -4,13 +4,9 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import ProjectProvider from "@/components/projects/list/provider";
 import ProjectList from "@/components/projects/list";
-import { Loader2 } from "lucide-react";
 
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center min-h-[60vh]">
-    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-  </div>
-);
+
+
 
 // FIX 1: Correctly define the PageProps interface for the dynamic route.
 // [session] from the folder path and [project] from the query string.
@@ -58,7 +54,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
     // --- Project List Layout ---
     return (
       <div className="container mx-auto px-4 py-8">
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense>
           <ProjectProvider initialProjects={[]}>
           
               <ProjectList />
